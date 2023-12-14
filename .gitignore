@@ -13,3 +13,5 @@
 .externalNativeBuild
 .cxx
 local.properties
+/app/src/main/cpp/libass*/*
+/app/src/main/cpp/CMakeFiles/*
