@@ -3,24 +3,28 @@
 #include <android/bitmap.h>
 #include <android/log.h>
 #include <cstdio>
+#include "ass/ass.h"
 
 #define LOG_TAG "libass_jni"
 
 
 extern "C" JNIEXPORT jstring
 
-JNICALL
-Java_com_example_myapplication_MainActivity_stringFromJNI(
+JNIEXPORT JNICALL Java_com_example_myapplication_MainActivity_stringFromJNI(
         JNIEnv *env,
         jobject /* this */) {
 
     std::string hello = "Hello from C+++";
     return env->NewStringUTF(hello.c_str());
 }
+
 extern "C"
 JNIEXPORT int JNICALL
 Java_com_example_myapplication_MainActivity_createTestBitmap(JNIEnv *env, jobject thiz,
                                                              jobject bitmap) {
+    ASS_Library* ass_lib;
+    ass_lib = ass_library_init();
+
     AndroidBitmapInfo info;
     void* pixels;
     int ret = AndroidBitmap_getInfo(env, bitmap, &info);
@@ -61,6 +65,7 @@ Java_com_example_myapplication_MainActivity_createTestBitmap(JNIEnv *env, jobjec
         __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, "Couldn't unlock the bitmap pixel via AndroidBitmap_unlockPixels\n");
         return -1;
     }
+    //ass_library_done(ass_lib);
 
     return 0;
 }
