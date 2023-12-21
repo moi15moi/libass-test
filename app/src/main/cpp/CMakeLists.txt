@@ -11,8 +11,9 @@ ExternalProject_Add(
         SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/libass
         INSTALL_DIR ${CMAKE_CURRENT_SOURCE_DIR}/libass/install
         BUILD_IN_SOURCE 1
-        CONFIGURE_COMMAND meson setup build -Drequire-system-font-provider=false --prefix ${CMAKE_CURRENT_SOURCE_DIR}/libass/install --reconfigure
+        CONFIGURE_COMMAND CC=${CMAKE_C_COMPILER} CXX=${CMAKE_CXX_COMPILER} meson setup build -Drequire-system-font-provider=false --prefix ${CMAKE_CURRENT_SOURCE_DIR}/libass/install --reconfigure --cross-file ../cross_file.txt
         BUILD_COMMAND ninja -C build
+        BUILD_ALWAYS true
         INSTALL_COMMAND ninja -C build install
         BUILD_BYPRODUCTS ${CMAKE_CURRENT_SOURCE_DIR}/libass/build/libass/libass.a
 )
